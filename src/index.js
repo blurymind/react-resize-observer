@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import ResizeObserver from "resize-observer-polyfill";
+import throttle from "lodash.throttle";
 
 class ResizeObserverComponent extends Component {
   constructor(props) {
@@ -14,6 +15,13 @@ class ResizeObserverComponent extends Component {
 
     this.ref = React.createRef();
   }
+
+   setSizeStateThrottled = throttle((width, height) => {
+    this.setState({
+      width,
+      height,
+    });
+  }, this.props.throttle ? this.props.throttle : 500);
 
   observeIfNeeded() {
     const element = this.ref.current;
@@ -39,10 +47,7 @@ class ResizeObserverComponent extends Component {
 
       const entry = entries[0];
 
-      this.setState({
-        width: entry.contentRect.width,
-        height: entry.contentRect.height
-      });
+      this.setSizeStateThrottled(entry.contentRect.width,entry.contentRect.height);
     });
 
     this.resizeObserver.observe(element);
