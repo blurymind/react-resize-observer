@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "prop-types": "^15.6.2",
-    "resize-observer-polyfill": "^1.5.0"
+    "resize-observer-polyfill": "^1.5.0",
+    "lodash.throttle": "^3.0.4"
   },
   "peerDependencies": {
     "react": "^16.6.0",
