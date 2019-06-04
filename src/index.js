@@ -73,7 +73,12 @@ class ResizeObserverComponent extends Component {
   }
 
   render() {
-    return this.props.children(this.ref, this.state.width, this.state.height);
+    if (!ref) {
+      const { width, height } = this.state;
+      const { children } = this.props;
+      return <div ref={this.ref}>{children({ width, height })}</div>;
+    }
+    return this.props.children(this.ref, this.state.width, this.state.height); 
   }
 }
 
